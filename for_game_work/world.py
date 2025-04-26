@@ -98,7 +98,7 @@ class World:
         return self.rooms[self.current_room_x][self.current_room_y]
 
     def draw_map(self):
-        """Отрисовка всей карты"""
+        '''Отрисовка всей карты'''
 
         for x in range(self.map_width):
             for y in range(self.map_height):
@@ -111,11 +111,12 @@ class World:
                     )
 
     def check_boss_conditions(self):
-        """Проверяет условия для спауна босса: все враги убиты И все комнаты посещены"""
+        '''Проверяет условия для спавна босса: все враги убиты и все комнаты посещены'''
+
         if self.boss_spawned:
             return False
 
-        # Проверяем, что все комнаты с врагами очищены
+        # Проверяем, что все комнаты с врагами очищены.
         all_enemies_defeated = True
         all_rooms_visited = True
 
@@ -123,15 +124,15 @@ class World:
             for y in range(self.map_height):
                 room = self.rooms[x][y]
                 if room is not None:
-                    # Проверка на непобежденных врагов
+                    # Проверка на непобежденных врагов.
                     if room.has_enemy and room.enemy and not room.enemy.is_dead:
                         all_enemies_defeated = False
 
-                    # Проверка на непосещенные комнаты
+                    # Проверка на непосещенные комнаты.
                     if not room.visited:
                         all_rooms_visited = False
 
-        # Если оба условия выполнены - спауним босса
+        # Если оба условия выполнены - спавним босса.
         if all_enemies_defeated and all_rooms_visited:
             self.spawn_boss()
             return True
@@ -161,7 +162,7 @@ class World:
         # Генерируем новый этаж.
         self.generate_world()
 
-        # Восстанавливаем показатели
+        # Восстанавливаем показатели.
         if old_hp is not None:
             self.player_hp = old_hp
         if old_mana is not None:

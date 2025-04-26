@@ -53,7 +53,7 @@ class Room:
             self._event_lose_resources
         ]
 
-        # Выбираем случайное событие
+        # Выбираем случайное событие.
         chosen_event = choice(events)
         result = chosen_event(heart, mana)
 
@@ -67,14 +67,14 @@ class Room:
         '''Событие: получение маны'''
 
         mana.increase_mana()
-        self.event_message = "Получена 1 мана!"
+        self.event_message = 'Получена 1 мана!'
         return True
 
     def _event_gain_health(self, heart, mana):
         '''Событие: получение здоровья'''
 
         heart.increase_hp()
-        self.event_message = "Получено 1 здоровье!"
+        self.event_message = 'Получено 1 здоровье!'
         return True
 
     def _event_lose_resources(self, heart, mana):
@@ -83,7 +83,7 @@ class Room:
         if heart.current_hp > 1 and mana.current_mana > 0:
             heart.decrease_hp()
             mana.decrease_mana()
-            self.event_message = "Потеряно 1 здоровье и 1 мана!"
+            self.event_message = 'Потеряно 1 здоровье и 1 мана!'
             return True
         return False  # Не срабатывает, если это приведет к смерти.
 
@@ -104,7 +104,7 @@ class Room:
             self.message_timer -= 1
 
     def draw_on_map(self, current_room_x, current_room_y, map_rect):
-        """Отрисовка комнаты на мини-карте"""
+        '''Отрисовка комнаты на мини-карте'''
 
         room_size = 10  # Размер комнаты.
         padding = 5  # Отступы между комнатами.

@@ -52,6 +52,57 @@ def events(world, heart, mana, abilities, sound_effects=None):
                     event.pos, heart, mana, current_room.enemy, world, sound_effects)
 
 
+def show_text_message(screen, text):
+    '''Показывает текстовое сообщение на экране'''
+
+    font = pygame.font.Font(None, 20)
+
+    # Разбиваем текст на строки.
+    lines = [line.strip() for line in text.split('\n') if line.strip()]
+
+    # Рендерим все строки.
+    rendered_lines = []
+    max_width = 0
+    total_height = 0
+
+    for line in lines:
+        rendered = font.render(line, True, (255, 255, 255))
+        rendered_lines.append(rendered)
+        max_width = max(max_width, rendered.get_width())
+        # +5 для отступа между строками.
+        total_height += rendered.get_height() + 5
+
+    # Создаем поверхность для фона.
+    bg_surface = pygame.Surface((max_width + 40, total_height + 40))
+    bg_surface.fill((0, 0, 0))
+
+    # Позиционируем.
+    bg_rect = bg_surface.get_rect(
+        center=(screen.get_width()//2, screen.get_height()//2))
+
+    # Отрисовываем.
+    screen.blit(bg_surface, bg_rect)
+
+    y_offset = 20
+    for rendered in rendered_lines:
+        text_rect = rendered.get_rect(
+            centerx=bg_rect.centerx, top=bg_rect.top + y_offset)
+        screen.blit(rendered, text_rect)
+        y_offset += rendered.get_height() + 5
+
+    pygame.display.flip()
+
+    # Ждем нажатия клавиши.
+    waiting = True
+    while waiting:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            if event.type == pygame.KEYDOWN or event.type == pygame.MOUSEBUTTONDOWN:
+                waiting = False
+
+
 def update_screen(screen, hand, heart, mana, world, abilities):
     '''Обновление экрана'''
 
@@ -103,7 +154,7 @@ def update_screen(screen, hand, heart, mana, world, abilities):
     # Отображаем счетчик пройденных этажей.
     font = pygame.font.Font(None, 25)
     boss_counter = font.render(
-        f"Этажей пройденно: {world.bosses_defeated}", True, (255, 255, 255))
+        f'Этажей пройденно: {world.bosses_defeated}', True, (255, 255, 255))
     screen.blit(boss_counter, (0, 70))
 
     hand.output()  # Отрисовка рук поверх экрана.
