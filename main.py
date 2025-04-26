@@ -54,7 +54,11 @@ def run():
     спокойствия и процветания. 
     Вот только такое чувство, что всё это ты уже слышишь не в первый раз...'''
 
-    BOSS_TEXT = '''boss_text'''
+    BOSS_TEXT = '''Тебе меня не одолеть! Жалкий смертный!
+    Я управляю самим временем, даже если ты победишь меня, то я просто верну всё обратно!
+    Ты обрёк себя на вечные попытки в тот момент, когда переступил порог моего подземелья!
+    Интересно, сколько раз до этого ты уже слышал мои млова!?
+    АХАХА-ХАХА-ХА!!!'''
 
     # Показываем вступительный текст.
     controls.show_text_message(screen, text=INTRO_TEXT)
@@ -63,7 +67,8 @@ def run():
     while True:
         screen.blit(background, (0, 0))
         controls.events(world, heart, mana, abilities, sound_effects)
-        controls.update_screen(screen, hand, heart, mana, world, abilities)
+        controls.update_screen(screen, hand, heart, mana,
+                               world, abilities, text=BOSS_TEXT)
 
         clock.tick(60)  # 60 кадров в секунду.
 

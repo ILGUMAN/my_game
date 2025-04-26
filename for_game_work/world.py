@@ -24,7 +24,7 @@ class World:
         self.start_room_y = self.current_room_y
         self.boss_spawned = False  # Изначально на этаже нет босса.
         self.boss_defeated = False  # Изначально босс не побеждён.
-        self.bosses_defeated = 0  # Счётчик пройденных этажей.
+        self.bosses_defeated = 0  # Счётчик пройденных циклов.
 
     def generate_world(self):
         '''Генерация мира и начальных комнат'''
@@ -144,8 +144,9 @@ class World:
 
         start_room = self.rooms[self.start_room_x][self.start_room_y]
         start_room.has_enemy = True
-        start_room.enemy = Boss(self.screen)  # Создаем босса.
+        start_room.enemy = Boss(self.screen)  # Создаём босса.
         self.boss_spawned = True
+        start_room.is_boss_room = True  # Добавляем флаг комнаты с боссом.
 
     def move_to_new_floor(self):
         '''Генерация нового этажа с сохранением прогресса'''

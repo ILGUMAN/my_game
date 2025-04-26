@@ -24,6 +24,9 @@ class Room:
         self.enemy = None
         self.generate_enemy()
 
+        self.is_boss_room = False
+        self.boss_message_shown = False
+
     def generate_enemy(self):
         '''Генерация врага в комнате с определённой вероятностью'''
 

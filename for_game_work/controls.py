@@ -62,18 +62,12 @@ def show_text_message(screen, text):
 
     # Рендерим все строки.
     rendered_lines = []
-    max_width = 0
-    total_height = 0
-
     for line in lines:
         rendered = font.render(line, True, (255, 255, 255))
         rendered_lines.append(rendered)
-        max_width = max(max_width, rendered.get_width())
-        # +5 для отступа между строками.
-        total_height += rendered.get_height() + 5
 
     # Создаем поверхность для фона.
-    bg_surface = pygame.Surface((max_width + 40, total_height + 40))
+    bg_surface = pygame.Surface((screen.get_width(), screen.get_height()))
     bg_surface.fill((0, 0, 0))
 
     # Позиционируем.
@@ -103,7 +97,7 @@ def show_text_message(screen, text):
                 waiting = False
 
 
-def update_screen(screen, hand, heart, mana, world, abilities):
+def update_screen(screen, hand, heart, mana, world, abilities, text):
     '''Обновление экрана'''
 
     # Если персонаж мёртв, то цвет фона меняется на красный.
@@ -111,6 +105,13 @@ def update_screen(screen, hand, heart, mana, world, abilities):
         screen.fill((255, 0, 0))
 
     current_room = world.get_current_room()
+
+    # Проверяем первый вход в комнату с боссом.
+    if (hasattr(current_room, 'is_boss_room')
+       and current_room.is_boss_room
+       and not current_room.boss_message_shown):
+        show_text_message(screen, text)
+        current_room.boss_message_shown = True
 
     # Проверяем условия для спавна босса.
     if not world.boss_spawned:
@@ -154,7 +155,7 @@ def update_screen(screen, hand, heart, mana, world, abilities):
     # Отображаем счетчик пройденных этажей.
     font = pygame.font.Font(None, 25)
     boss_counter = font.render(
-        f'Этажей пройденно: {world.bosses_defeated}', True, (255, 255, 255))
+        f'Циклов пройдено: {world.bosses_defeated}', True, (255, 255, 255))
     screen.blit(boss_counter, (0, 70))
 
     hand.output()  # Отрисовка рук поверх экрана.
