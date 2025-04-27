@@ -49,7 +49,7 @@ def events(world, heart, mana, abilities, sound_effects=None):
                               and not current_room.enemy.is_dead)
             if has_live_enemy:
                 abilities.check_click(
-                    event.pos, heart, mana, current_room.enemy, world, sound_effects)
+                    event.pos, heart, mana, current_room.enemy, sound_effects)
 
 
 def show_text_message(screen, text):
@@ -161,6 +161,6 @@ def update_screen(screen, hand, heart, mana, world, abilities, text):
     hand.output()  # Отрисовка рук поверх экрана.
     heart.output()  # Отрисовка сердец поверх экрана.
     mana.output()  # Отрисовка маны поверх экрана.
-    abilities.output()  # Отрисовка иконок способностей поверх экрана.
+    abilities.output()  # Отрисовка иконок способностей и их эффектов поверх экрана.
 
     pygame.display.flip()  # Обновление отрисовок экрана.
