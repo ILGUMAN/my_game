@@ -8,13 +8,13 @@ class Hand():
 
         # Получаем экран и руки.
         self.screen = screen
-        self.leftf_hand_image = load('sprites/character/hand.png')
+        self.left_hand_image = load('sprites/character/hand.png')
         self.right_hand_image = flip(
-            self.leftf_hand_image, True, False)
+            self.left_hand_image, True, False)
 
         # Получили прямоугольники экрана и рук.
         self.screen_rect = screen.get_rect()
-        self.left_hand_rect = self.leftf_hand_image.get_rect()
+        self.left_hand_rect = self.left_hand_image.get_rect()
         self.right_hand_rect = self.right_hand_image.get_rect()
 
         # Задаём координаты рук на экране.
@@ -28,5 +28,5 @@ class Hand():
     def output(self):
         '''Рисует руки'''
 
-        self.screen.blit(self.leftf_hand_image, self.left_hand_rect)
+        self.screen.blit(self.left_hand_image, self.left_hand_rect)
         self.screen.blit(self.right_hand_image, self.right_hand_rect)

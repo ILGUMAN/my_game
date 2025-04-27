@@ -20,7 +20,7 @@ class Room:
         # Флаг срабатывания события для пустой комнаты.
         self.event_triggered = False
         self.event_message = ""  # Сообщение события.
-        self.message_timer = 0  # Время показа сообщения.
+        self.message_timer = 60  # Время показа сообщения.
         self.enemy = None
         self.generate_enemy()
 
@@ -62,7 +62,6 @@ class Room:
 
         if result:
             self.event_triggered = True
-            self.message_timer = 60
             return True
         return False
 

@@ -1,6 +1,5 @@
 from pygame.font import Font
 from pygame.image import load
-from pygame.transform import scale
 
 
 class Abilities():
@@ -18,9 +17,9 @@ class Abilities():
         '''Создание иконок способностей'''
 
         # Загрузка и масштабирование иконок.
-        heal_image = scale(load('sprites/abilities/heal.png'), (50, 50))
-        attack_image = scale(load('sprites/abilities/attack.png'), (50, 50))
-        escape_image = scale(load('sprites/abilities/kill.png'), (50, 50))
+        heal_image = load('sprites/abilities/heal.png')
+        attack_image = load('sprites/abilities/attack.png')
+        kill_image = load('sprites/abilities/kill.png')
 
         # Создаем кнопки способностей.
         self.abilities = [
@@ -37,8 +36,8 @@ class Abilities():
                 'cost': 2
             },
             {
-                'image': escape_image,
-                'rect': escape_image.get_rect(),
+                'image': kill_image,
+                'rect': kill_image.get_rect(),
                 'type': 'kill',
                 'cost': 5
             }
@@ -82,11 +81,12 @@ class Abilities():
                 # Уменьшаем количиство маны.
                 if mana.current_mana >= ability['cost']:
                     mana.decrease_mana(ability['cost'])
-                    self.use_ability(ability['type'], heart, enemy, world, sound_effects)
+                    self.use_ability(
+                        ability['type'], heart, enemy, sound_effects)
                     return True
         return False
 
-    def use_ability(self, ability_type, heart, enemy, world, sound_effects=None):
+    def use_ability(self, ability_type, heart, enemy, sound_effects=None):
         '''Использование способности'''
 
         if ability_type == 'heal':
