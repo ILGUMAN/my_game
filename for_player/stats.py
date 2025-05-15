@@ -1,5 +1,6 @@
 from pygame.image import load
 from pygame.font import Font
+from pygame import draw
 
 
 class Heart():
@@ -71,6 +72,10 @@ class Heart():
         # Создание прямоугольника для текста.
         text_rect = text.get_rect(
             center=(self.screen_rect.centerx, self.screen_rect.centery))
+        # Фон для текста.
+        draw.rect(self.screen, (0, 0, 0),
+                      (text_rect.x-10, text_rect.y-10,
+                       text_rect.width+20, text_rect.height+20))
         self.screen.blit(text, text_rect)  # Вывод текста на экран.
 
 
