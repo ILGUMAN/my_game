@@ -6,6 +6,14 @@ from for_game_work.world import World
 from for_player.abilities import Abilities
 
 
+# Контролирует перезапуски игры.
+def run_game():
+    while True:
+        game_result = run()
+        if game_result != 'restart':
+            break
+
+
 # Главная рабочая функция.
 def run():
     pygame.init()  # Инициализация игровой системы.
@@ -65,6 +73,11 @@ def run():
 
     # Главный цикл исполнения игровых действий.
     while True:
+        event_result = controls.events(
+            world, heart, mana, abilities, sound_effects)
+        if event_result == 'restart':
+            return 'restart'
+
         screen.blit(background, (0, 0))
         controls.events(world, heart, mana, abilities, sound_effects)
         controls.update_screen(screen, hand, heart, mana,
@@ -74,4 +87,4 @@ def run():
 
 
 if __name__ == '__main__':
-    run()
+    run_game()

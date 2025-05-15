@@ -1,6 +1,6 @@
 from pygame.image import load
 from pygame.font import Font
-from pygame import draw
+from pygame import draw, Rect
 
 
 class Heart():
@@ -23,6 +23,9 @@ class Heart():
         self.heart_rect.left = self.screen_rect.left
 
         self.is_dead = False  # Флаг смерти.
+
+        # Создём кнопку рестарта.
+        self.create_restart_button()
 
     def output(self):
         '''Рисует сердца'''
@@ -63,6 +66,16 @@ class Heart():
 
         self.is_dead = True
 
+    def create_restart_button(self):
+        '''Создает кнопку рестарта'''
+        button_width, button_height = 200, 50
+        self.restart_button = Rect(
+            self.screen_rect.centerx - button_width//2,
+            self.screen_rect.centery,
+            button_width,
+            button_height
+        )
+
     def show_death_text(self):
         '''Выводит на экран смерти надпись'''
 
@@ -71,12 +84,21 @@ class Heart():
         text = font.render("GAME OVER!!!", True, (255, 255, 255))
         # Создание прямоугольника для текста.
         text_rect = text.get_rect(
-            center=(self.screen_rect.centerx, self.screen_rect.centery))
+            center=(self.screen_rect.centerx, self.screen_rect.centery-50))
         # Фон для текста.
         draw.rect(self.screen, (0, 0, 0),
-                      (text_rect.x-10, text_rect.y-10,
-                       text_rect.width+20, text_rect.height+20))
+                  (text_rect.x-10, text_rect.y-10,
+                   text_rect.width+20, text_rect.height+20))
         self.screen.blit(text, text_rect)  # Вывод текста на экран.
+
+        # Кнопка рестарта.
+        draw.rect(self.screen, (0, 0, 0), self.restart_button)
+
+        button_font = Font(None, 36)
+        button_text = button_font.render("Restart", True, (255, 255, 255))
+        button_text_rect = button_text.get_rect(
+            center=self.restart_button.center)
+        self.screen.blit(button_text, button_text_rect)
 
 
 class Mana():

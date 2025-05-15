@@ -50,6 +50,11 @@ def events(world, heart, mana, abilities, sound_effects=None):
             if has_live_enemy:
                 abilities.check_click(
                     event.pos, heart, mana, current_room.enemy, sound_effects)
+                
+        # Перезапуск игры.
+        elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+            if heart.is_dead and heart.restart_button.collidepoint(event.pos):
+                return 'restart'  # Сигнал для перезапуска игры.
 
 
 def show_text_message(screen, text):
@@ -161,6 +166,7 @@ def update_screen(screen, hand, heart, mana, world, abilities, text):
     hand.output()  # Отрисовка рук поверх экрана.
     heart.output()  # Отрисовка сердец поверх экрана.
     mana.output()  # Отрисовка маны поверх экрана.
-    abilities.output()  # Отрисовка иконок способностей и их эффектов поверх экрана.
+    # Отрисовка иконок способностей и их эффектов поверх экрана.
+    abilities.output()
 
     pygame.display.flip()  # Обновление отрисовок экрана.
